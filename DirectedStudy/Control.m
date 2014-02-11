@@ -22,7 +22,7 @@ function varargout = Control(varargin)
 
 % Edit the above text to modify the response to help Control
 
-% Last Modified by GUIDE v2.5 04-Feb-2014 11:19:18
+% Last Modified by GUIDE v2.5 11-Feb-2014 14:19:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -197,19 +197,19 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on selection change in popupmenu2.
-function popupmenu2_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu2 (see GCBO)
+% --- Executes on selection change in TypeBox.
+function TypeBox_Callback(hObject, eventdata, handles)
+% hObject    handle to TypeBox (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu2 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu2
+% Hints: contents = cellstr(get(hObject,'String')) returns TypeBox contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from TypeBox
 
 
 % --- Executes during object creation, after setting all properties.
-function popupmenu2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu2 (see GCBO)
+function TypeBox_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to TypeBox (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
