@@ -26,7 +26,7 @@ Gs = tf(num,den);
 Gz = c2d(Gs,T);
 po = po/100;
 if(strncmp(type,'PI',2))
-    %figure(1); step(Gz); title('Uncompensated Step Response');
+    figure(1); step(Gz); title('Uncompensated Step Response');
     if(strcmp(analysis,'Bode'))
         phi=atan(-pi/log(po));
         zeta=cos(phi);
@@ -41,7 +41,7 @@ if(strncmp(type,'PI',2))
         % find discrete time design point
         zd=exp(sd*T);
 
-        %figure(2); bode(Gz); title('Uncompensated Bode Response');
+        figure(2); bode(Gz); title('Uncompensated Bode Response');
 
         X=evalfr(Gz,zd);
         xm=abs(X);
@@ -67,13 +67,13 @@ if(strncmp(type,'PI',2))
         Gop=Dz*Gz;
         Gcl=feedback(Gop,1);
 
-        %figure(3); bode(Gop); title('Compensated Bode Response'); grid on;
+        figure(3); bode(Gop); title('Compensated Bode Response'); grid on;
 
-        %figure(4); step(Gcl); title('Step Response');grid on;
+        figure(4); step(Gcl); title('Step Response');grid on;
         
         [z,p,k,Ts] = zpkdata(Dz);
-        str=[num2str(k) '(z-' num2str(p) ')/(z-1)'];
-        set(h_control, 'String', 'Hello');
+        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        set(h_control, 'String', str);
     elseif(strcmp(analysis,'Root Locus'))
         phi=atan(-pi/log(po));
         zeta=cos(phi);
@@ -84,7 +84,7 @@ if(strncmp(type,'PI',2))
         % Continuous and discrete time design points
         sd=-sigmad+j*wd;
         zd=exp(sd*T);
-        %figure(2);
+        figure(2);
         rlocus(Gz); title('Uncompensated Root Locus');
         hold on;
         line(real(zd),imag(zd),'Marker','^');
@@ -110,16 +110,16 @@ if(strncmp(type,'PI',2))
         Gop=Dz*Gz;
         Gcl=feedback(Gop,1);
 
-        %figure(3);rlocus(Gop);title('Compensated root locus');
+        figure(3);rlocus(Gop);title('Compensated root locus');
         hold on
         line(real(zd),imag(zd),'Marker','^');
         hold off
 
-        %figure(4);step(Gcl);title('Step Response with PI Compensator');
+        figure(4);step(Gcl);title('Step Response with PI Compensator');
         grid on;
         
         [z,p,k,Ts] = zpkdata(Dz);
-        str=[num2str(k) '(z-' num2str(p) ')/(z-1)'];
+        str=[k(1) '(z-' p(1) ')/(z-1)'];
         set(h_control, 'String', str);
     else
         %disp('Not a valid option. The program is ended.');
@@ -127,7 +127,7 @@ if(strncmp(type,'PI',2))
     
 elseif(strcmp(type,'PD'))
     
-    %figure(1); step(Gz); title('Uncompensated Step Response');
+    figure(1); step(Gz); title('Uncompensated Step Response');
     
     if(strcmp(analysis,'Bode'))
         phi=atan(-pi/log(po));
@@ -143,7 +143,7 @@ elseif(strcmp(type,'PD'))
         % find discrete time design point
         zd=exp(sd*T);
 
-        %figure(2); bode(Gz); title('Uncompensated Bode Response');
+        figure(2); bode(Gz); title('Uncompensated Bode Response');
 
         X=evalfr(Gz,zd);
         xm=abs(X);
@@ -169,9 +169,13 @@ elseif(strcmp(type,'PD'))
         Gop=Dz*Gz;
         Gcl=feedback(Gop,1);
 
-        %figure(3); bode(Gop); title('Compensated Bode Response'); grid on;
+        figure(3); bode(Gop); title('Compensated Bode Response'); grid on;
 
-        %figure(4); step(Gcl); title('Compensated Step Response');grid on;
+        figure(4); step(Gcl); title('Compensated Step Response');grid on;
+        
+        [z,p,k,Ts] = zpkdata(Dz);
+        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        set(h_control, 'String', str);
     elseif(strcmp(analysis,'Root Locus'))
         phi=atan(-pi/log(po));
         zeta=cos(phi);
@@ -209,19 +213,23 @@ elseif(strcmp(type,'PD'))
         Gop=Dz*Gz;
         Gcl=feedback(Gop,1);
 
-        %figure(3);rlocus(Gop);title('Compensated root locus');
+        figure(3);rlocus(Gop);title('Compensated root locus');
         hold on
         line(real(zd),imag(zd),'Marker','^');
         hold off
 
-        %figure(4);step(Gcl);title('Step Response with PD Compensator');
+        figure(4);step(Gcl);title('Step Response with PD Compensator');
         grid on;
+        
+        [z,p,k,Ts] = zpkdata(Dz);
+        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        set(h_control, 'String', str);
     else
         %disp('Not a valid option. The program is ended.');
     end
     
 else %Proportional
-    %figure(1); step(Gz); title('Uncompensated Step Response');
+    figure(1); step(Gz); title('Uncompensated Step Response');
     if(strcmp(analysis,'Bode'))
         phi=atan(-pi/log(po));
         zeta=cos(phi);
@@ -236,15 +244,17 @@ else %Proportional
         % find discrete time design point
         zd=exp(sd*T);
 
-        %figure(2); bode(Gz); title('Uncompensated Bode Response');
+        figure(2); bode(Gz); title('Uncompensated Bode Response');
 
         % evaluate open loop systems at design point
         X=evalfr(Gz,zd);
         K=1/abs(X);
         Gop=K*Gz;
         Gcl=minreal(K*Gz/(1+K*Gz));
-        %figure(3); bode(Gop); title('Compensated Bode Response');
-        %figure(4); step(Gcl); title('Compensated Step Response');
+        figure(3); bode(Gop); title('Compensated Bode Response');
+        figure(4); step(Gcl); title('Compensated Step Response');
+        
+        set(h_control, 'String', ['K= ' num2str(K)]);
     elseif(strcmp(analysis,'Root Locus'))
         phi=atan(-pi/log(po));
         zeta=cos(phi);
@@ -263,11 +273,11 @@ else %Proportional
         X=evalfr(Gz,zd);
         K=1/abs(X);
         Gcl=feedback(K*Gz,1);
-        %figure(3); step(Gcl); title('Closed Loop Step Response');
+        figure(3); step(Gcl); title('Closed Loop Step Response');
+        set(h_control, 'String', ['K = ' num2str(K)]);
     else
         %disp('Not a valid option. The program is ended.');
     end
-    %set(h_control, 'Text', ['K = ' K]);
 end
 
 
