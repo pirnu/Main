@@ -25,7 +25,7 @@ den = str2num( get(h_den,'String'));
 Gs = tf(num,den);
 Gz = c2d(Gs,T);
 po = po/100;
-if(strncmp(type,'PI',2))
+if(strcmp(type,'PI'))
     figure(1); step(Gz); title('Uncompensated Step Response');
     if(strcmp(analysis,'Bode'))
         phi=atan(-pi/log(po));
@@ -191,11 +191,10 @@ elseif(strcmp(type,'PD'))
         X = evalfr(Gz,zd);
 
         thc=pi-angle(X);
-
         xd=real(zd);
         yd=imag(zd);
+        
         thp=angle(zd);
-
         thz=thc+thp;
 
         al=xd-yd/tan(thz);
