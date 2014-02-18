@@ -33,7 +33,6 @@ if(strncmp(type,'PI',2))
         wn=4/(zeta*Ts);
         % calculate phase margin
         PM=atan(2*zeta/sqrt(-2*zeta^2+sqrt(1+4*zeta^4)));
-        pm=PM*180/pi;
         % calculate gain crossover frequency
         wgc=2*zeta*wn/tan(PM);
         % find continuous time design point
@@ -44,7 +43,6 @@ if(strncmp(type,'PI',2))
         figure(2); bode(Gz); title('Uncompensated Bode Response');
 
         X=evalfr(Gz,zd);
-        xm=abs(X);
 
         thc=PM-pi-angle(X);
 
@@ -72,7 +70,7 @@ if(strncmp(type,'PI',2))
         figure(4); step(Gcl); title('Step Response');grid on;
         
         [z,p,k,Ts] = zpkdata(Dz);
-        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        str=[k(1) '(z-' z(1) ')/(z-1)'];
         set(h_control, 'String', str);
     elseif(strcmp(analysis,'Root Locus'))
         phi=atan(-pi/log(po));
@@ -119,7 +117,7 @@ if(strncmp(type,'PI',2))
         grid on;
         
         [z,p,k,Ts] = zpkdata(Dz);
-        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        str=[k(1) '(z-' z(1) ')/(z-1)'];
         set(h_control, 'String', str);
     else
         %disp('Not a valid option. The program is ended.');
@@ -135,7 +133,6 @@ elseif(strcmp(type,'PD'))
         wn=4/(zeta*Ts);
         % calculate phase margin
         PM=atan(2*zeta/sqrt(-2*zeta^2+sqrt(1+4*zeta^4)));
-        pm=PM*180/pi;
         % calculate gain crossover frequency
         wgc=2*zeta*wn/tan(PM);
         % find continuous time design point
@@ -146,7 +143,6 @@ elseif(strcmp(type,'PD'))
         figure(2); bode(Gz); title('Uncompensated Bode Response');
 
         X=evalfr(Gz,zd);
-        xm=abs(X);
 
         thc=PM-pi-angle(X);
 
@@ -174,7 +170,7 @@ elseif(strcmp(type,'PD'))
         figure(4); step(Gcl); title('Compensated Step Response');grid on;
         
         [z,p,k,Ts] = zpkdata(Dz);
-        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        str=[k(1) '(z-' z(1) ')/z'];
         set(h_control, 'String', str);
     elseif(strcmp(analysis,'Root Locus'))
         phi=atan(-pi/log(po));
@@ -222,7 +218,7 @@ elseif(strcmp(type,'PD'))
         grid on;
         
         [z,p,k,Ts] = zpkdata(Dz);
-        str=[k(1) '(z-' p(1) ')/(z-1)'];
+        str=[k(1) '(z-' z(1) ')/z'];
         set(h_control, 'String', str);
     else
         %disp('Not a valid option. The program is ended.');
@@ -236,7 +232,6 @@ else %Proportional
         wn=4/(zeta*Ts);
         % calculate phase margin
         PM=atan(2*zeta/sqrt(-2*zeta^2+sqrt(1+4*zeta^4)));
-        pm=PM*180/pi;
         % calculate gain crossover frequency
         wgc=2*zeta*wn/tan(PM);
         % find continuous time design point
